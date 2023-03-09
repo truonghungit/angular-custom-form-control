@@ -1,0 +1,4 @@
+<button mat-icon-button *ngFor="let ratingId of ratingArr;index as i" [ngClass]="getActiveClass(i)"
+  (mouseenter)="onMouseEnter(i)" (mouseleave)="onMouseLeave()" (click)="onClick(i+1)">
+  <mat-icon>star</mat-icon>
+</button>
