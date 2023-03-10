@@ -7,17 +7,17 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class RatingComponent {
 
-  @Input('rating') rating: number = 0;
-  @Input('starCount') starCount: number = 5;
+  @Input() rating: number = 0;
+  @Input() max: number = 5;
 
   @Output() ratingChanged = new EventEmitter();
 
-  ratingArr: Array<number> = [];
+  stars: Array<number> = [];
   tempRating = this.rating;
 
   ngOnInit() {
-    for (let index = 0; index < this.starCount; index++) {
-      this.ratingArr.push(index);
+    for (let index = 0; index < this.max; index++) {
+      this.stars.push(index);
     }
   }
 
@@ -25,7 +25,7 @@ export class RatingComponent {
     return this.tempRating >= index + 1 ? "active" : ""
   }
 
-  onClick(rating: number) {
+  onStarClick(rating: number) {
     this.rating = rating;
     this.ratingChanged.emit(rating);
   }

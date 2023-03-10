@@ -2,16 +2,16 @@
 
   <mat-card class="form">
     <mat-card-content>
-      <div>
+      <form [formGroup]="feedbackForm" (submit)="obSubmit()">
         <h3>Rate this app</h3>
 
         <div class="text-center">
-          <app-rating></app-rating>
+          <app-rating [rating]="0" (ratingChanged)="onRatingChanged($event)"></app-rating>
         </div>
 
         <mat-form-field class="mt-4 " appearance="outline">
           <mat-label>Describe your experience (optional)</mat-label>
-          <textarea matInput placeholder="Ex. It makes me feel..."></textarea>
+          <textarea matInput formControlName="feedback" placeholder="Ex. It makes me feel..."></textarea>
         </mat-form-field>
 
         <small class="mt-4">TELL US MORE (OPTIONAL)</small>
@@ -20,22 +20,22 @@
           <mat-card>
             <mat-card-content>
               <div class="mb-4">Rate your experience for ads shown inside the app. </div>
-              <app-rating></app-rating>
+              <app-rating [rating]="0" (ratingChanged)="onRatingForAdsChanged($event)"></app-rating>
             </mat-card-content>
           </mat-card>
 
           <mat-card>
             <mat-card-content>
               <div class="mb-4">Rate your experience for how easy to use the app is.</div>
-              <app-rating></app-rating>
+              <app-rating [rating]="0" (ratingChanged)="onRatingForEasyToUseChanged($event)"></app-rating>
             </mat-card-content>
           </mat-card>
         </div>
 
         <div class="mt-6 flex justify-content-end">
-          <button mat-raised-button color="primary">Submit</button>
+          <button type="submit" mat-raised-button color="primary">Submit</button>
         </div>
-      </div>
+      </form>
     </mat-card-content>
   </mat-card>
 
