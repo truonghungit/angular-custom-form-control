@@ -6,7 +6,7 @@
         <h3>Rate this app</h3>
 
         <div class="text-center">
-          <app-rating [rating]="0" (ratingChanged)="onRatingChanged($event)"></app-rating>
+          <app-rating formControlName="rating"></app-rating>
         </div>
 
         <mat-form-field class="mt-4 " appearance="outline">
@@ -20,14 +20,14 @@
           <mat-card>
             <mat-card-content>
               <div class="mb-4">Rate your experience for ads shown inside the app. </div>
-              <app-rating [rating]="0" (ratingChanged)="onRatingForAdsChanged($event)"></app-rating>
+              <app-rating formControlName="ratingForAds"></app-rating>
             </mat-card-content>
           </mat-card>
 
           <mat-card>
             <mat-card-content>
               <div class="mb-4">Rate your experience for how easy to use the app is.</div>
-              <app-rating [rating]="0" (ratingChanged)="onRatingForEasyToUseChanged($event)"></app-rating>
+              <app-rating formControlName="ratingForEasyToUse"></app-rating>
             </mat-card-content>
           </mat-card>
         </div>

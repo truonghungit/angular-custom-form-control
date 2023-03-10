@@ -1,19 +1,28 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, forwardRef, Input, OnInit } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'app-rating',
   templateUrl: './rating.component.html',
-  styleUrls: ['./rating.component.css']
+  styleUrls: ['./rating.component.css'],
+  providers: [{
+    provide: NG_VALUE_ACCESSOR,
+    multi: true,
+    useExisting: forwardRef(() => RatingComponent),
+  }]
 })
-export class RatingComponent {
-
-  @Input() rating: number = 0;
+export class RatingComponent implements OnInit, ControlValueAccessor {
   @Input() max: number = 5;
 
-  @Output() ratingChanged = new EventEmitter();
+  rating = 0;
+  tempRating = 0;
 
+  touched = false;
+  disabled = false;
   stars: Array<number> = [];
-  tempRating = this.rating;
+
+  onChange = (rating: number) => { };
+  onTouched = () => { };
 
   ngOnInit() {
     for (let index = 0; index < this.max; index++) {
@@ -21,20 +30,51 @@ export class RatingComponent {
     }
   }
 
-  getActiveClass(index: number) {
-    return this.tempRating >= index + 1 ? "active" : ""
+  writeValue(value: number): void {
+    this.rating = value;
+    this.tempRating = this.rating;
+  }
+
+  registerOnChange(onChangeFn: any): void {
+    this.onChange = onChangeFn;
+  }
+
+  registerOnTouched(onTouchedFn: any): void {
+    this.onTouched = onTouchedFn;
+  }
+
+  setDisabledState?(isDisabled: boolean): void {
+    this.disabled = isDisabled;
   }
 
   onStarClick(rating: number) {
+    if (this.disabled) {
+      return;
+    }
+
+    this.markAsTouched();
     this.rating = rating;
-    this.ratingChanged.emit(rating);
+    this.onChange(this.rating);
   }
 
   onMouseEnter(index: number) {
+    if (this.disabled) {
+      return;
+    }
     this.tempRating = index + 1;
   }
 
   onMouseLeave() {
+    if (this.disabled) {
+      return;
+    }
     this.tempRating = this.rating;
+  }
+
+  markAsTouched() {
+    if (!this.touched) {
+      this.onTouched();
+      this.touched = true;
+    }
   }
 }

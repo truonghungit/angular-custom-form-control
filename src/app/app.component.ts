@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -14,33 +14,19 @@ export class AppComponent {
   ratingAds = 0;
   ratingForEasyToUse = 0;
 
-  constructor() {
-    this.feedbackForm = new FormGroup({
-      feedback: new FormControl()
-    })
-  }
+  constructor(private fb: FormBuilder) {
+    this.feedbackForm = this.fb.group({
+      rating: [],
+      ratingForAds: [],
+      ratingForEasyToUse: [],
+      feedback: [],
+    });
 
-  onRatingChanged(rating: number): void {
-    this.rating = rating;
-  }
-
-  onRatingForAdsChanged(rating: number): void {
-    this.ratingAds = rating;
-  }
-
-  onRatingForEasyToUseChanged(rating: number): void {
-    this.ratingForEasyToUse = rating;
+    console.log(this.feedbackForm);
   }
 
   obSubmit(): void {
-    const data = {
-      ...this.feedbackForm.value,
-      rating: this.rating,
-      ratingAds: this.ratingAds,
-      ratingForEasyToUse: this.ratingForEasyToUse,
-    };
-
-    console.log("data: ", data)
+    console.log("data: ", this.feedbackForm.value)
     // TODO: send data to server
   }
 

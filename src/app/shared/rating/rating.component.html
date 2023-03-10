@@ -1,4 +1,4 @@
-<button type="button" mat-icon-button *ngFor="let r of stars;index as i" [ngClass]="getActiveClass(i)"
+<button type="button" mat-icon-button *ngFor="let r of stars;index as i" [ngClass]="tempRating >= i + 1 ? 'active' : ''"
   (mouseenter)="onMouseEnter(i)" (mouseleave)="onMouseLeave()" (click)="onStarClick(i+1)">
   <mat-icon>star</mat-icon>
 </button>
